@@ -10,14 +10,19 @@ import com.example.HospitalManagement.System.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UsersServiceImplementation implements UsersService{
+public class UsersServiceImplementation implements UsersService, UserDetailsService {
 
     private final UsersRepository usersRepository;
     private final RolesRepository rolesRepository;
@@ -31,9 +36,11 @@ public class UsersServiceImplementation implements UsersService{
         if(usersRepository.existsByUsername(users.getUsername())){
             throw new IllegalArgumentException("Username " + users.getUsername() + " already exists");
         }
+
         UserEntity userEntity = new UserEntity();
         userEntity.setId(users.getId());
         userEntity.setFullName(users.getFullName());
+        userEntity.setUsername(users.getUsername());
         userEntity.setEmail(users.getEmail());
         userEntity.setContact(userEntity.getContact());
         userEntity.setPassword(new PasswordEncoder().encodePassword(users.getPassword()));
@@ -41,5 +48,14 @@ public class UsersServiceImplementation implements UsersService{
         userEntity.setRoles(List.of(roles));
         usersRepository.save(userEntity);
         return new ResponseEntity<>(new Response("User has been registered successfully"), HttpStatus.OK);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<UserEntity> userEntityOptional = usersRepository.findByUsername(username);
+        if(userEntityOptional.isPresent()){
+            return userEntityOptional.get();
+        }
+        throw new UsernameNotFoundException("username " + username + " not found");
     }
 }
