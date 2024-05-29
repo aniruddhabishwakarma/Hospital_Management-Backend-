@@ -4,6 +4,8 @@ import com.example.HospitalManagement.System.model.ValidationResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,6 +42,22 @@ public class GlobalExceptionHandler{
                 .message(ex.getMessage())
                         .build(),HttpStatus.CONFLICT);
 
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ExceptionResponse> invalidCredential(BadCredentialsException ex){
+        return new ResponseEntity<>(new ExceptionResponse().builder()
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .message(ex.getMessage())
+                .build(),HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> usernameNotFound(UsernameNotFoundException ex){
+        return  new ResponseEntity<>(new ExceptionResponse().builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .message(ex.getMessage())
+                .build(), HttpStatus.NOT_FOUND);
     }
 
 }

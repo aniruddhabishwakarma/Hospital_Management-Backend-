@@ -41,9 +41,10 @@ public class SecurityConfig {
                                     new AntPathRequestMatcher("/ws-api/**")
                             ).permitAll()
                             .requestMatchers(
-                                    new AntPathRequestMatcher("/api/admin/**")
-                            ).hasRole("ADMIN")
-                            .requestMatchers("/api/user/**").hasRole("USER")
+                                    new AntPathRequestMatcher("/api/admin/**"),
+                                    new AntPathRequestMatcher("/bye")
+                            ).hasRole("USER")
+                            .requestMatchers("/api/user/**").hasRole("ADMIN")
                             .anyRequest().authenticated()
             )
             .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)

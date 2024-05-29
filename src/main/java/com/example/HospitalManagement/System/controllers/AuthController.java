@@ -1,5 +1,6 @@
 package com.example.HospitalManagement.System.controllers;
 
+import com.example.HospitalManagement.System.model.AuthRequest;
 import com.example.HospitalManagement.System.model.Users;
 import com.example.HospitalManagement.System.service.user.UsersService;
 import jakarta.validation.Valid;
@@ -23,5 +24,10 @@ public class AuthController {
     public ResponseEntity<Object> registerUser(@Valid @RequestBody Users users){
         System.out.println(users);
         return usersService.registerUser(users);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@Valid @RequestBody AuthRequest authRequest){
+        return usersService.login(authRequest);
     }
 }
