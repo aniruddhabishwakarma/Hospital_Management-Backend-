@@ -15,4 +15,9 @@ public class Contoller {
     public String bye(){
         return "bye";
     }
+
+    @GetMapping("goodbye")
+    public String goodBye(){
+        return "GoodBye";
+    }
 }

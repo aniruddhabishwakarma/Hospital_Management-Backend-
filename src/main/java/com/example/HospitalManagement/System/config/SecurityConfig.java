@@ -30,7 +30,6 @@ public class SecurityConfig {
                     authorizeRequests
                             .requestMatchers(
                                     new AntPathRequestMatcher("/auth/**"),
-                                    new AntPathRequestMatcher("/hello"),
                                     new AntPathRequestMatcher("/h2-console/**"),
                                     new AntPathRequestMatcher("/api/users/**"),
                                     new AntPathRequestMatcher("/v3/api-docs/**"),
@@ -43,8 +42,9 @@ public class SecurityConfig {
                             .requestMatchers(
                                     new AntPathRequestMatcher("/api/admin/**"),
                                     new AntPathRequestMatcher("/bye")
-                            ).hasRole("USER")
-                            .requestMatchers("/api/user/**").hasRole("ADMIN")
+                            ).hasRole("ADMIN")
+                            .requestMatchers("/api/user/**").hasAnyRole("USER","ADMIN")
+                            .requestMatchers("/goodbye").hasRole("HOSPITAL_MANAGER")
                             .anyRequest().authenticated()
             )
             .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)

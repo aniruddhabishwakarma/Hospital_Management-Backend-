@@ -22,7 +22,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody Users users){
-        System.out.println(users);
+        System.out.println(users + "from controller");
         return usersService.registerUser(users);
     }
 

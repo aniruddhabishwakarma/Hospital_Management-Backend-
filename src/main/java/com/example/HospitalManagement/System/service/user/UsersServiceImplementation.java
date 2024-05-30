@@ -8,8 +8,8 @@ import com.example.HospitalManagement.System.model.AuthRequest;
 import com.example.HospitalManagement.System.model.AuthResponse;
 import com.example.HospitalManagement.System.model.Response;
 import com.example.HospitalManagement.System.model.Users;
-import com.example.HospitalManagement.System.repository.RolesRepository;
-import com.example.HospitalManagement.System.repository.UsersRepository;
+import com.example.HospitalManagement.System.repository.user.RolesRepository;
+import com.example.HospitalManagement.System.repository.user.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +47,7 @@ public class UsersServiceImplementation implements UsersService, UserDetailsServ
         userEntity.setFullName(users.getFullName());
         userEntity.setUsername(users.getUsername());
         userEntity.setEmail(users.getEmail());
-        userEntity.setContact(userEntity.getContact());
+        userEntity.setContact(users.getContact());
         userEntity.setPassword(new PasswordEncoder().encodePassword(users.getPassword()));
         Roles roles = rolesRepository.findByName("ROLE_USER").get();
         userEntity.setRoles(List.of(roles));
