@@ -26,7 +26,7 @@ public class UserRoles implements Serializable{
     @JoinColumn(name = "role_id")
     private Roles roles;
 
-    public UserRoles(int id, String userEntityId, int roleId) {
+    public UserRoles(int id, int userEntityId, int roleId) {
         this.id = id;
         // Assuming you have setters for userEntity and roles
         this.userEntity.setId(userEntityId); // Directly setting the ID might not be possible depending on your entity relationships

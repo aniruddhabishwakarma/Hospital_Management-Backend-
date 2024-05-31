@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Users {
-    private String id;
     @NotNull(message = "Cannot be null or empty")
     @NotEmpty(message = "Cannot be empty")
     private String fullName;
