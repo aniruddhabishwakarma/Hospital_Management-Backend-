@@ -8,4 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface UserService {
     ResponseEntity<Object> addPhoto(MultipartFile file, Long id);
+
+    ResponseEntity<Object> updatePhoto(MultipartFile file, Long id);
+
+    ResponseEntity<?> returnPhoto(String fileName);
 }
