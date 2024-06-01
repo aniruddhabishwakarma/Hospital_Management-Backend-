@@ -22,7 +22,7 @@ public class UserController {
     @PostMapping("/addPhoto")
     public ResponseEntity<Object> addPhoto(@RequestParam("photo") MultipartFile file){
         UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int id = user.getId();
+        Long id = user.getId();
         return userService.addPhoto(file, id);
     }
 }

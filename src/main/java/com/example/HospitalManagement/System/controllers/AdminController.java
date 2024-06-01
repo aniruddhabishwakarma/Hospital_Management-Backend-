@@ -14,13 +14,13 @@ public class AdminController {
 
 
     @PutMapping("/adminRole/{id}")
-    public ResponseEntity<Object> setAdminRole(@PathVariable("id") String id){
+    public ResponseEntity<Object> setAdminRole(@PathVariable("id") Long id){
 
         return adminService.setRole(id);
     }
 
     @PutMapping("/managerRole/{id}")
-    public ResponseEntity<Object> setHospitalManager(@PathVariable("id") String id){
+    public ResponseEntity<Object> setHospitalManager(@PathVariable("id") Long id){
         return adminService.setHospitalManager(id);
     }
 }

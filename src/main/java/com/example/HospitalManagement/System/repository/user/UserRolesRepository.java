@@ -13,5 +13,5 @@ import java.util.List;
 @Repository
 public interface UserRolesRepository extends JpaRepository<UserRoles,Integer> {
     @Query("SELECT u FROM UserRoles u WHERE u.userEntity.id = :id")
-    UserRoles findUserRoleById(@Param("id") String id);
+    UserRoles findUserRoleById(@Param("id") Long id);
 }

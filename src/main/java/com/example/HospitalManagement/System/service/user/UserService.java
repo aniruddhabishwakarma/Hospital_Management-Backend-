@@ -7,5 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public interface UserService {
-    ResponseEntity<Object> addPhoto(MultipartFile file, int id);
+    ResponseEntity<Object> addPhoto(MultipartFile file, Long id);
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface AdminService {
-    ResponseEntity<Object> setRole(String id);
+    ResponseEntity<Object> setRole(Long id);
 
-    ResponseEntity<Object> setHospitalManager(String id);
+    ResponseEntity<Object> setHospitalManager(Long id);
 }

@@ -23,13 +23,10 @@ public class AdminServiceImplementation implements AdminService{
 
     private final UserRolesRepository userRolesRepository;
     @Override
-    public ResponseEntity<Object> setRole(String id) {
+    public ResponseEntity<Object> setRole(Long id) {
 
-//        UserEntity userEntity = usersRepository.findById(id).get();
-//        System.out.println(userEntity);
+
         Roles roles = rolesRepository.findByName("ROLE_ADMIN").get();
-//        userEntity.setRoles(List.of(roles));
-//        usersRepository.save(userEntity);
 
         UserRoles userRoles = userRolesRepository.findUserRoleById(id);
         userRoles.setRoles(roles);
@@ -38,7 +35,7 @@ public class AdminServiceImplementation implements AdminService{
     }
 
     @Override
-    public ResponseEntity<Object> setHospitalManager(String id) {
+    public ResponseEntity<Object> setHospitalManager(Long id) {
         Roles roles = rolesRepository.findByName("ROLE_HOSPITAL_MANAGER").get();
         UserRoles userRoles = userRolesRepository.findUserRoleById(id);
         userRoles.setRoles(roles);

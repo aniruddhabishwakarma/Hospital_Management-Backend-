@@ -34,9 +34,7 @@ public class AuthServiceImplementation implements AuthService, UserDetailsServic
 
     @Override
     public ResponseEntity<Object> registerUser(Users users) {
-//        if(users.getId() == null || users.getId().isEmpty()){
-//            users.setId(UUID.randomUUID().toString());
-//        }
+
 
         if(usersRepository.existsByUsername(users.getUsername())){
             throw new IllegalArgumentException("Username " + users.getUsername() + " already exists");
@@ -50,6 +48,7 @@ public class AuthServiceImplementation implements AuthService, UserDetailsServic
         userEntity.setPassword(new PasswordEncoder().encodePassword(users.getPassword()));
         Roles roles = rolesRepository.findByName("ROLE_USER").get();
         userEntity.setRoles(List.of(roles));
+        System.out.println(userEntity);
         usersRepository.save(userEntity);
         return new ResponseEntity<>(new Response("User has been registered successfully"), HttpStatus.OK);
     }
@@ -62,7 +61,13 @@ public class AuthServiceImplementation implements AuthService, UserDetailsServic
             if(!userEntity.isPresent()){
                 throw new UsernameNotFoundException("Number " + authRequest.getUsername()+ " doesn't exist! Please try with username");
             }
-        }else{
+        }else if(authRequest.getUsername().endsWith(".com")){
+            userEntity = usersRepository.findByEmail(authRequest.getUsername());
+            if(!userEntity.isPresent()){
+                throw new UsernameNotFoundException("Email" + " doesn't exist! Please try with username or number");
+            }
+        }
+        else{
             userEntity = usersRepository.findByUsername(authRequest.getUsername());
 
             if(!userEntity.isPresent()){

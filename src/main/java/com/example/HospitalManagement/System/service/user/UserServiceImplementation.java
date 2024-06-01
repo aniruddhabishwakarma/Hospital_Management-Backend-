@@ -33,8 +33,8 @@ public class UserServiceImplementation implements UserService {
     private final PhotosRepository photosRepository;
 
     @Override
-    public ResponseEntity<Object> addPhoto(MultipartFile file, int id) {
-        try{
+    public ResponseEntity<Object> addPhoto(MultipartFile file, Long id) {
+        try {
             String originalFileName = file.getOriginalFilename();
             String extension = "";
             int lastDotIndex = originalFileName.lastIndexOf('.');
@@ -63,6 +63,6 @@ public class UserServiceImplementation implements UserService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
+//
 }

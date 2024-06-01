@@ -2,6 +2,7 @@ package com.example.HospitalManagement.System.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,11 +13,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user_roles")
-public class UserRoles implements Serializable{
+@Builder
+public class UserRoles{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -26,11 +28,6 @@ public class UserRoles implements Serializable{
     @JoinColumn(name = "role_id")
     private Roles roles;
 
-    public UserRoles(int id, int userEntityId, int roleId) {
-        this.id = id;
-        // Assuming you have setters for userEntity and roles
-        this.userEntity.setId(userEntityId); // Directly setting the ID might not be possible depending on your entity relationships
-        this.roles.setId(roleId); // Similar caution applies here
-    }
+
 
 }
