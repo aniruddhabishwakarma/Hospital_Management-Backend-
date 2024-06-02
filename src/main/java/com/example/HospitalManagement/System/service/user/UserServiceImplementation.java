@@ -3,6 +3,7 @@ package com.example.HospitalManagement.System.service.user;
 import com.example.HospitalManagement.System.entity.PhotosEntity;
 import com.example.HospitalManagement.System.entity.UserEntity;
 import com.example.HospitalManagement.System.model.Response;
+import com.example.HospitalManagement.System.model.UserInfo;
 import com.example.HospitalManagement.System.repository.photos.PhotosRepository;
 import com.example.HospitalManagement.System.repository.user.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -132,6 +133,14 @@ public class UserServiceImplementation implements UserService {
         } catch (Exception e) {
             return ResponseEntity.status(400).body(Response.builder().message(e.getMessage()));
         }
+    }
+
+    @Override
+    public ResponseEntity<Object> userInfo(Long id) {
+
+        Optional<UserInfo> userInfoOptional = usersRepository.findUserById(id);
+        UserInfo userInfo = userInfoOptional.get();
+        return new ResponseEntity<>(userInfo,HttpStatus.OK);
     }
 
 }

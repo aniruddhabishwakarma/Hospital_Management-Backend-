@@ -41,6 +41,7 @@ public class SecurityConfig {
                             ).permitAll()
                             .requestMatchers(
                                     new AntPathRequestMatcher("/api/admin/**"),
+                                    new AntPathRequestMatcher("/api/roles/**"),
                                     new AntPathRequestMatcher("/bye")
                             ).hasRole("ADMIN")
                             .requestMatchers("/api/user/**").hasAnyRole("USER","ADMIN","HOSPITAL_MANAGER")

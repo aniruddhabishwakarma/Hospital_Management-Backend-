@@ -12,4 +12,6 @@ public interface UserService {
     ResponseEntity<Object> updatePhoto(MultipartFile file, Long id);
 
     ResponseEntity<?> returnPhoto(String fileName);
+
+    ResponseEntity<Object> userInfo(Long id);
 }

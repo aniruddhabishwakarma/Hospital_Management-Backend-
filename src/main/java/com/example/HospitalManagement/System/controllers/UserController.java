@@ -16,6 +16,13 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping("/user/info")
+    public ResponseEntity<Object> getUserInfo(){
+       UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       Long id = user.getId();
+       return userService.userInfo(id);
+    }
+
     @PostMapping("/user/addPhoto")
     public ResponseEntity<Object> addPhoto(@RequestParam("photo") MultipartFile file){
         UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
