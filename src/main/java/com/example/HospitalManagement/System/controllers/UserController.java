@@ -1,6 +1,8 @@
 package com.example.HospitalManagement.System.controllers;
 
 import com.example.HospitalManagement.System.entity.UserEntity;
+import com.example.HospitalManagement.System.model.user.Password;
+import com.example.HospitalManagement.System.model.user.UserInfo;
 import com.example.HospitalManagement.System.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,16 @@ public class UserController {
        UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
        Long id = user.getId();
        return userService.userInfo(id);
+    }
+
+    @PutMapping("/user/updateInfo")
+    public ResponseEntity<Object> updateInfo(@RequestBody UserInfo userInfo){
+        return userService.updateInfo(userInfo);
+    }
+
+    @PutMapping("/user/updatePassword")
+    public ResponseEntity<Object> updatePassword(@RequestBody Password password){
+        return userService.updatePassword(password);
     }
 
     @PostMapping("/user/addPhoto")

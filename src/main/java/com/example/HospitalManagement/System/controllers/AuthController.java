@@ -1,7 +1,7 @@
 package com.example.HospitalManagement.System.controllers;
 
-import com.example.HospitalManagement.System.model.AuthRequest;
-import com.example.HospitalManagement.System.model.Users;
+import com.example.HospitalManagement.System.model.auth.AuthRequest;
+import com.example.HospitalManagement.System.model.user.Users;
 import com.example.HospitalManagement.System.service.auth.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

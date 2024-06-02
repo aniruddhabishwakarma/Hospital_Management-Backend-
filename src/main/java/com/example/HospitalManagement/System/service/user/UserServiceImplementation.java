@@ -1,9 +1,11 @@
 package com.example.HospitalManagement.System.service.user;
 
+import com.example.HospitalManagement.System.config.PasswordEncoder;
 import com.example.HospitalManagement.System.entity.PhotosEntity;
 import com.example.HospitalManagement.System.entity.UserEntity;
 import com.example.HospitalManagement.System.model.Response;
-import com.example.HospitalManagement.System.model.UserInfo;
+import com.example.HospitalManagement.System.model.user.Password;
+import com.example.HospitalManagement.System.model.user.UserInfo;
 import com.example.HospitalManagement.System.repository.photos.PhotosRepository;
 import com.example.HospitalManagement.System.repository.user.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -141,6 +141,31 @@ public class UserServiceImplementation implements UserService {
         Optional<UserInfo> userInfoOptional = usersRepository.findUserById(id);
         UserInfo userInfo = userInfoOptional.get();
         return new ResponseEntity<>(userInfo,HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateInfo(UserInfo userInfo) {
+        Optional<UserEntity> userInfoOptional = usersRepository.findById(userInfo.getId());
+        UserEntity userEntity = userInfoOptional.get();
+        userEntity.setFullName(userInfo.getFullName());
+        userEntity.setContact(userInfo.getContact());
+        userEntity.setEmail(userInfo.getEmail());
+
+        usersRepository.save(userEntity);
+        return new ResponseEntity<>(new Response("Updated Successfully"), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Object> updatePassword(Password password) {
+        UserEntity userEntity = usersRepository.findById(password.getId()).get();
+        if(new PasswordEncoder().matches(password.getPassword(), userEntity.getPassword())){
+            throw new BadCredentialsException("Please enter correct password");
+        }else{
+            userEntity.setPassword(new PasswordEncoder().encodePassword(password.getNewPassword()));
+            usersRepository.save(userEntity);
+            return new ResponseEntity<>(new Response("Password has been updated successfully"),HttpStatus.OK);
+        }
+
     }
 
 }
